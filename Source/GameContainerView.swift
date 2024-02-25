@@ -11,7 +11,6 @@ struct GameContainerView : View
 	var body: some View
 	{
 		Label("Game server state", systemImage: "suit.club.fill")
-			.scaledToFill()
 	}
 }
 

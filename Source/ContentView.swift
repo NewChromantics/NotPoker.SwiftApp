@@ -27,17 +27,19 @@ public class GameServerWrapper : ObservableObject
 	}
 	
 	@MainActor // as we change published variables, we need to run on the main thread
-	public func Load(player: PlayerUid) async throws
+	public func Load(player: PlayerUid) async
 	{
 		do
 		{
 			let newGame = GameServer_Offline()
 			try await newGame.Join(Player: player)
 			self.gameServer = newGame
+			startupError = nil
 		}
 		catch
 		{
 			//	show startup error
+			print("Error starting game: \(error.localizedDescription)")
 			startupError = error.localizedDescription
 		}
 	}
@@ -58,34 +60,47 @@ struct ContentView: View
 	{
 		Task()
 		{
-			try await gameServer.Load(player: player)
+			await gameServer.Load(player: player)
 		}
 	}
 	
 	var body: some View
 	{
-		EmptyView()
-			.onAppear()
-			{
-				InitGame()
-			}
+		if startupError != nil
+		{
+			Label("Startup error \(startupError!)", systemImage: "exclamationmark.triangle.fill")
+				.padding(8)	//	inner padding
+				.background(Color("ErrorBackground"))
+				.foregroundColor(Color("ErrorForeground"))
+				.cornerRadius(4)
+				.padding(4)	//	outer padding
+		}
+		
 
 		VStack()
 		{
-			if startupError != nil
-			{
-				Label("Startup error \(startupError!)", systemImage: "exclamationmark.triangle.fill")
-			}
-			
 			if let game = gameServer as? NotPokerApi.GameServer
 			{
 				GameContainerView(gameServer: game)
 			}
 			else
 			{
-				Label("Connecting to game...", systemImage: "suit.spade")
+				Label("Waiting for game...", systemImage: "suit.spade")
 			}
 		}
+		.padding(40)	//	inner padding
+		.frame(minWidth: 100,minHeight: 100)
+		.background(Color("GameBackground"))
+		.foregroundColor(Color("GameForeground"))
+		.background()
+		.cornerRadius(12)
+		.padding(20)	//	outerpadding
+		.onAppear()
+		{
+			InitGame()
+		}
+
+
 	}
 }
 
