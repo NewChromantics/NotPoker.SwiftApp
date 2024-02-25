@@ -1,4 +1,5 @@
 import SwiftUI
+import NotPokerApi
 
 @main
 struct NotPokerApp: App
@@ -7,7 +8,8 @@ struct NotPokerApp: App
 	{
 		WindowGroup 
 		{
-			ContentView()
+			AppView()
 		}
 	}
 }
+

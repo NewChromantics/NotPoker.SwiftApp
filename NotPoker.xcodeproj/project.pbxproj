@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -11,6 +11,9 @@
 		BF70C2EF2B8B6C0A002B72C0 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF70C2EB2B8B6C0A002B72C0 /* ContentView.swift */; };
 		BF70C2F32B8B6C9A002B72C0 /* Version.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = BF70C2F22B8B6C9A002B72C0 /* Version.xcconfig */; };
 		BF70C2F52B8B6D3F002B72C0 /* App.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = BF70C2F42B8B6D3F002B72C0 /* App.xcconfig */; };
+		BF8A54362B8B7AD300AFCA7E /* GameContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8A54352B8B7AD300AFCA7E /* GameContainerView.swift */; };
+		BF8A54392B8B7DC900AFCA7E /* NotPokerApi in Frameworks */ = {isa = PBXBuildFile; productRef = BF8A54382B8B7DC900AFCA7E /* NotPokerApi */; };
+		BF8A543A2B8B845100AFCA7E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF70C2E62B8B6C0A002B72C0 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +24,8 @@
 		BF70C2EB2B8B6C0A002B72C0 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		BF70C2F22B8B6C9A002B72C0 /* Version.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Version.xcconfig; sourceTree = "<group>"; };
 		BF70C2F42B8B6D3F002B72C0 /* App.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = App.xcconfig; sourceTree = "<group>"; };
+		BF8A54342B8B744500AFCA7E /* NotPokerApi */ = {isa = PBXFileReference; lastKnownFileType = folder; path = NotPokerApi; sourceTree = "<group>"; };
+		BF8A54352B8B7AD300AFCA7E /* GameContainerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameContainerView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -28,6 +33,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BF8A54392B8B7DC900AFCA7E /* NotPokerApi in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -37,9 +43,11 @@
 		BF3EB10B2B8B6B3400F1CA06 = {
 			isa = PBXGroup;
 			children = (
+				BF8A54342B8B744500AFCA7E /* NotPokerApi */,
 				BF70C2E52B8B6C0A002B72C0 /* Source */,
 				BF3EB1262B8B6B8B00F1CA06 /* App */,
 				BF3EB1152B8B6B3400F1CA06 /* Products */,
+				BF8A54372B8B7DC900AFCA7E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -66,9 +74,17 @@
 			isa = PBXGroup;
 			children = (
 				BF70C2EA2B8B6C0A002B72C0 /* NotPokerApp.swift */,
+				BF8A54352B8B7AD300AFCA7E /* GameContainerView.swift */,
 				BF70C2EB2B8B6C0A002B72C0 /* ContentView.swift */,
 			);
 			path = Source;
+			sourceTree = "<group>";
+		};
+		BF8A54372B8B7DC900AFCA7E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -87,6 +103,9 @@
 			dependencies = (
 			);
 			name = NotPoker;
+			packageProductDependencies = (
+				BF8A54382B8B7DC900AFCA7E /* NotPokerApi */,
+			);
 			productName = NotPoker;
 			productReference = BF3EB1142B8B6B3400F1CA06 /* NotPoker.app */;
 			productType = "com.apple.product-type.application";
@@ -115,6 +134,9 @@
 				Base,
 			);
 			mainGroup = BF3EB10B2B8B6B3400F1CA06;
+			packageReferences = (
+				BF8A54312B8B719600AFCA7E /* XCLocalSwiftPackageReference "NotPokerApi/Client.SwiftPackage" */,
+			);
 			productRefGroup = BF3EB1152B8B6B3400F1CA06 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -130,6 +152,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BF70C2F52B8B6D3F002B72C0 /* App.xcconfig in Resources */,
+				BF8A543A2B8B845100AFCA7E /* Assets.xcassets in Resources */,
 				BF70C2F32B8B6C9A002B72C0 /* Version.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -141,6 +164,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BF8A54362B8B7AD300AFCA7E /* GameContainerView.swift in Sources */,
 				BF70C2EE2B8B6C0A002B72C0 /* NotPokerApp.swift in Sources */,
 				BF70C2EF2B8B6C0A002B72C0 /* ContentView.swift in Sources */,
 			);
@@ -347,6 +371,21 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		BF8A54312B8B719600AFCA7E /* XCLocalSwiftPackageReference "NotPokerApi/Client.SwiftPackage" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = NotPokerApi/Client.SwiftPackage;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		BF8A54382B8B7DC900AFCA7E /* NotPokerApi */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BF8A54312B8B719600AFCA7E /* XCLocalSwiftPackageReference "NotPokerApi/Client.SwiftPackage" */;
+			productName = NotPokerApi;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = BF3EB10C2B8B6B3400F1CA06 /* Project object */;
 }
