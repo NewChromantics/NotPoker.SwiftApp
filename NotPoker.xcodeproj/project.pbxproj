@@ -14,6 +14,7 @@
 		BF8A54362B8B7AD300AFCA7E /* GameContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8A54352B8B7AD300AFCA7E /* GameContainerView.swift */; };
 		BF8A54392B8B7DC900AFCA7E /* NotPokerApi in Frameworks */ = {isa = PBXBuildFile; productRef = BF8A54382B8B7DC900AFCA7E /* NotPokerApi */; };
 		BF8A543A2B8B845100AFCA7E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF70C2E62B8B6C0A002B72C0 /* Assets.xcassets */; };
+		BF8A543C2B8BEC3400AFCA7E /* GameTest.js in Resources */ = {isa = PBXBuildFile; fileRef = BF8A543B2B8BEC3400AFCA7E /* GameTest.js */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		BF70C2F42B8B6D3F002B72C0 /* App.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = App.xcconfig; sourceTree = "<group>"; };
 		BF8A54342B8B744500AFCA7E /* NotPokerApi */ = {isa = PBXFileReference; lastKnownFileType = folder; path = NotPokerApi; sourceTree = "<group>"; };
 		BF8A54352B8B7AD300AFCA7E /* GameContainerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameContainerView.swift; sourceTree = "<group>"; };
+		BF8A543B2B8BEC3400AFCA7E /* GameTest.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = GameTest.js; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +75,7 @@
 		BF70C2E52B8B6C0A002B72C0 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				BF8A543B2B8BEC3400AFCA7E /* GameTest.js */,
 				BF70C2EA2B8B6C0A002B72C0 /* NotPokerApp.swift */,
 				BF8A54352B8B7AD300AFCA7E /* GameContainerView.swift */,
 				BF70C2EB2B8B6C0A002B72C0 /* ContentView.swift */,
@@ -151,6 +154,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BF8A543C2B8BEC3400AFCA7E /* GameTest.js in Resources */,
 				BF70C2F52B8B6D3F002B72C0 /* App.xcconfig in Resources */,
 				BF8A543A2B8B845100AFCA7E /* Assets.xcassets in Resources */,
 				BF70C2F32B8B6C9A002B72C0 /* Version.xcconfig in Resources */,

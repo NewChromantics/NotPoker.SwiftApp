@@ -16,6 +16,6 @@ struct GameContainerView : View
 
 #Preview 
 {
-	GameContainerView( gameServer: GameServer_Offline() )
+	return GameContainerView( gameServer: GameServer_Null() )
 }
 

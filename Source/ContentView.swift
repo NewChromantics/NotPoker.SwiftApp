@@ -31,7 +31,7 @@ public class GameServerWrapper : ObservableObject
 	{
 		do
 		{
-			let newGame = GameServer_Offline()
+			let newGame = try GameServer_Offline()
 			try await newGame.Join(Player: player)
 			self.gameServer = newGame
 			startupError = nil
