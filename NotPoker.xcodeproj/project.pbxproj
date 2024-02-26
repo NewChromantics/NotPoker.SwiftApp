@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		BF70C2EE2B8B6C0A002B72C0 /* NotPokerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF70C2EA2B8B6C0A002B72C0 /* NotPokerApp.swift */; };
-		BF70C2EF2B8B6C0A002B72C0 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF70C2EB2B8B6C0A002B72C0 /* ContentView.swift */; };
+		BF70C2EF2B8B6C0A002B72C0 /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF70C2EB2B8B6C0A002B72C0 /* AppView.swift */; };
 		BF70C2F32B8B6C9A002B72C0 /* Version.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = BF70C2F22B8B6C9A002B72C0 /* Version.xcconfig */; };
 		BF70C2F52B8B6D3F002B72C0 /* App.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = BF70C2F42B8B6D3F002B72C0 /* App.xcconfig */; };
 		BF8A54362B8B7AD300AFCA7E /* GameContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8A54352B8B7AD300AFCA7E /* GameContainerView.swift */; };
@@ -22,7 +22,7 @@
 		BF70C2E62B8B6C0A002B72C0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BF70C2E92B8B6C0A002B72C0 /* NotPoker.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = NotPoker.entitlements; sourceTree = "<group>"; };
 		BF70C2EA2B8B6C0A002B72C0 /* NotPokerApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotPokerApp.swift; sourceTree = "<group>"; };
-		BF70C2EB2B8B6C0A002B72C0 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		BF70C2EB2B8B6C0A002B72C0 /* AppView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
 		BF70C2F22B8B6C9A002B72C0 /* Version.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Version.xcconfig; sourceTree = "<group>"; };
 		BF70C2F42B8B6D3F002B72C0 /* App.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = App.xcconfig; sourceTree = "<group>"; };
 		BF8A54342B8B744500AFCA7E /* NotPokerApi */ = {isa = PBXFileReference; lastKnownFileType = folder; path = NotPokerApi; sourceTree = "<group>"; };
@@ -78,7 +78,7 @@
 				BF8A543B2B8BEC3400AFCA7E /* GameTest.js */,
 				BF70C2EA2B8B6C0A002B72C0 /* NotPokerApp.swift */,
 				BF8A54352B8B7AD300AFCA7E /* GameContainerView.swift */,
-				BF70C2EB2B8B6C0A002B72C0 /* ContentView.swift */,
+				BF70C2EB2B8B6C0A002B72C0 /* AppView.swift */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -170,7 +170,7 @@
 			files = (
 				BF8A54362B8B7AD300AFCA7E /* GameContainerView.swift in Sources */,
 				BF70C2EE2B8B6C0A002B72C0 /* NotPokerApp.swift in Sources */,
-				BF70C2EF2B8B6C0A002B72C0 /* ContentView.swift in Sources */,
+				BF70C2EF2B8B6C0A002B72C0 /* AppView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

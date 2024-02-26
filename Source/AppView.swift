@@ -85,7 +85,7 @@ struct ContentView: View
 			}
 			else
 			{
-				Label("Waiting for game...", systemImage: "suit.spade")
+				Label("Waiting for game...", systemImage: "suit.club.fill")
 			}
 		}
 		.padding(40)	//	inner padding

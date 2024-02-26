@@ -5,7 +5,7 @@
 
 async function Hello()
 {
-	//throw `Exception from hello`;
+	throw `Exception from hello`;
 	return "world";
 }
 
