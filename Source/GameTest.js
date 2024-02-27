@@ -1,12 +1,12 @@
-'use strict';
+let Module = require(`ImportedTest.js`)
 
+console.log(`Module=${Module}`);
 
 //console.log("What");
 
-async function Hello()
+async function AsyncHello()
 {
-	throw `Exception from hello`;
-	return "world";
+	throw `I am an exception string`;
 }
 
 /*
