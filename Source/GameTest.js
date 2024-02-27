@@ -1,4 +1,4 @@
-let Module = require(`ImportedTest.js`)
+let Module = ImportModule(`ImportedTest.js`)
 
 console.log(`Module=${Module}`);
 
@@ -16,3 +16,5 @@ module.exports =
 };
 */
 
+//	will fail module init
+return 123;
