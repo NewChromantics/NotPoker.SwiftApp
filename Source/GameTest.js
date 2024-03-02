@@ -1,4 +1,9 @@
-let Module = ImportModule(`ImportedTest.js`)
+//let Module = __ImportModule(`ImportedTest.js`)
+import * as Module from "ImportedTest.js"
+import {One} from "ImportedTest.js"
+import ModuleDefault from 'ImportedTest.js'
+
+let importfrom = "This shouldn't match";
 
 console.log("js post import...");
 console.log(`Module=${JSON.stringify(Module)}`);
@@ -6,20 +11,13 @@ console.log(`Module.Thing=${Module.Thing}`);
 console.log(`typeof Module.SomeFunction=${typeof Module.SomeFunction}`);
 console.log(`Module.SomeFunction()=${Module.SomeFunction()}`);
 
-//	import { ImportedHello } from
 let ImportedHello = Module.SomeFunction;
 
 async function AsyncHello()
 {
-	throw `I am an exception string`;
+	throw `I am an exception string (One=${One})`;
 }
 
-/*
-module.exports =
-{
-	Hello,
-};
-*/
 
 //	will fail module init
 //return 123;
