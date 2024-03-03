@@ -16,6 +16,7 @@
 		BF8A543A2B8B845100AFCA7E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF70C2E62B8B6C0A002B72C0 /* Assets.xcassets */; };
 		BF8A543C2B8BEC3400AFCA7E /* GameTest.js in Resources */ = {isa = PBXBuildFile; fileRef = BF8A543B2B8BEC3400AFCA7E /* GameTest.js */; };
 		BFB6672E2B8E938400492468 /* ImportedTest.js in Resources */ = {isa = PBXBuildFile; fileRef = BFB6672D2B8E938400492468 /* ImportedTest.js */; };
+		BFDD95F02B94A66200882472 /* JavascriptSourceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDD95EF2B94A66200882472 /* JavascriptSourceView.swift */; };
 		BFFF5A882B8D1D0F0038148E /* Games in Resources */ = {isa = PBXBuildFile; fileRef = BFFF5A872B8D1D0F0038148E /* Games */; };
 /* End PBXBuildFile section */
 
@@ -31,6 +32,7 @@
 		BF8A54352B8B7AD300AFCA7E /* GameContainerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameContainerView.swift; sourceTree = "<group>"; };
 		BF8A543B2B8BEC3400AFCA7E /* GameTest.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = GameTest.js; sourceTree = "<group>"; };
 		BFB6672D2B8E938400492468 /* ImportedTest.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = ImportedTest.js; sourceTree = "<group>"; };
+		BFDD95EF2B94A66200882472 /* JavascriptSourceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JavascriptSourceView.swift; sourceTree = "<group>"; };
 		BFFF5A872B8D1D0F0038148E /* Games */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Games; path = NotPokerApi/Games; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -83,6 +85,7 @@
 				BF8A543B2B8BEC3400AFCA7E /* GameTest.js */,
 				BFB6672D2B8E938400492468 /* ImportedTest.js */,
 				BF70C2EA2B8B6C0A002B72C0 /* NotPokerApp.swift */,
+				BFDD95EF2B94A66200882472 /* JavascriptSourceView.swift */,
 				BF8A54352B8B7AD300AFCA7E /* GameContainerView.swift */,
 				BF70C2EB2B8B6C0A002B72C0 /* AppView.swift */,
 			);
@@ -176,6 +179,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BFDD95F02B94A66200882472 /* JavascriptSourceView.swift in Sources */,
 				BF8A54362B8B7AD300AFCA7E /* GameContainerView.swift in Sources */,
 				BF70C2EE2B8B6C0A002B72C0 /* NotPokerApp.swift in Sources */,
 				BF70C2EF2B8B6C0A002B72C0 /* AppView.swift in Sources */,
