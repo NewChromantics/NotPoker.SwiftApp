@@ -7,6 +7,8 @@ struct AppView: View
 {
 	var body: some View
 	{
+		//JavascriptSourceView(filename:"Games/Minesweeper.js")
+		
 		ContentView( player: PlayerUid("App player") )
 			.frame(maxWidth: .infinity, maxHeight: .infinity)
 			.background( Color("AppBackground") )
