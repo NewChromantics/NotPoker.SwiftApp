@@ -1,14 +1,11 @@
 //console.log("imported file");
-
 function ImportedHello()
 {
 	return "world";
 };
 
-__exports.One = "one";
-__exports.Two = 222;
-__exports.SomeFunction = ImportedHello;
-__exports.SomeFunctionResult = __exports.SomeFunction();
-
-//console.log(`typeof exports.SomeFunction=${typeof __exports.SomeFunction}`);
-//console.log(`imported file exports=${JSON.stringify(__exports)}`);
+export const One = "one";
+export Two = 222;
+export const SomeFunction = ImportedHello;
+export SomeFunctionResult = SomeFunction();
+export default One;

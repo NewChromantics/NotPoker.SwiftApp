@@ -10,7 +10,7 @@ console.log(`Module=${JSON.stringify(Module)}`);
 console.log(`typeof Module.SomeFunction=${typeof Module.SomeFunction}`);
 console.log(`Module.SomeFunction()=${Module.SomeFunction()}`);
 
-let ImportedHello = Module.SomeFunction;
+export let ImportedHello = Module.SomeFunction;
 
 async function AsyncHello()
 {

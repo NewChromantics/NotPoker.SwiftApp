@@ -20,7 +20,7 @@ struct RuntimeError: LocalizedError
 
 struct JavascriptSourceView : View
 {
-	@State var filename : String = "GameTest.js"
+	@State var filename : String = "ImportedTest.js"
 	@State var url : URL? = nil
 	@State var source : String = ""
 	@State var loadError : String?
@@ -77,9 +77,11 @@ struct JavascriptSourceView : View
 		ScrollView
 		{
 			Text(source)
-				.frame(maxWidth: .infinity,maxHeight:.infinity)
+				.padding(20)
+				.frame(maxWidth: .infinity,maxHeight:.infinity, alignment:.topLeading)
 				.textSelection(.enabled)
 				.background(.white)
+				.padding(0)
 		}
 	}
 }
