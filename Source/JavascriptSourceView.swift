@@ -80,7 +80,8 @@ struct JavascriptSourceView : View
 				.padding(20)
 				.frame(maxWidth: .infinity,maxHeight:.infinity, alignment:.topLeading)
 				.textSelection(.enabled)
-				.background(.white)
+				.background(Color("SourceBackground"))
+				.foregroundColor(Color("SourceForeground"))
 				.padding(0)
 		}
 	}
