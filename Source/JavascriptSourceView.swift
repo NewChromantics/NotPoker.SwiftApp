@@ -20,7 +20,7 @@ struct RuntimeError: LocalizedError
 
 struct JavascriptSourceView : View
 {
-	@State var filename : String = "ImportedTest.js"
+	@State var filename : String
 	@State var url : URL? = nil
 	@State var source : String = ""
 	@State var loadError : String?
@@ -89,6 +89,6 @@ struct JavascriptSourceView : View
 
 #Preview 
 {
-	JavascriptSourceView()
+	JavascriptSourceView(filename:"Test_ImportedDefaultIsWrongExport.js")
 }
 
