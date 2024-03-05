@@ -6,8 +6,8 @@ let Client_PlayerUid = null;
 async function Allocate(GameName)
 {
 	const Module = __ImportModule(`./Games/${GameName}.js`);
-	console.log(`imported module; ${JSON.stringify(Module)}`);
-	console.log(`imported module keys; ${Object.keys(Module)}`);
+	//console.log(`imported module; ${JSON.stringify(Module)}`);
+	//console.log(`imported module keys; ${Object.keys(Module)}`);
 	const GameConstructor = Module.default;
 	console.log(`Allocating game; ${GameConstructor.name}`);
 	const NewGame = new GameConstructor( console.log );
@@ -18,8 +18,11 @@ async function Allocate(GameName)
 
 async function WaitForNextGameState()
 {
-	await Yield(1000);
-	
+	console.log(`WaitForNextGameState entering yield`);
+	//	gr: this nbever resolves!
+	//await Yield(10);
+	console.log(`WaitForNextGameState exit yield`);
+
 	const NewState = {};
 	NewState.Test = "Hello";
 	
@@ -28,13 +31,12 @@ async function WaitForNextGameState()
 
 async function AddPlayer(PlayerUid)
 {
+	console.log(`AddPlayer... Server_Game=${Server_Game}`);
 	if ( !Server_Game )
 		throw `No game running`;
 	
-	const result = "added player ok";
-	/*
 	const Result = await Server_Game.AddPlayer(PlayerUid);
-	*/
+
 	//	set only if successfully joined
 	Client_PlayerUid = PlayerUid;
 	

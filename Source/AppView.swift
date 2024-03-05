@@ -56,7 +56,7 @@ struct AppView: View
 		VStack()
 		{
 			//JavascriptSourceView(filename:"Games/Minesweeper.js")
-			JavascriptSourceView(filename:"Test_ImportedDefaultIsWrongExport.js")
+			//JavascriptSourceView(filename:"Test_ImportedDefaultIsWrongExport.js")
 			
 
 			LoginView(playerUid: $playerUid)
