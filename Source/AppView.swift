@@ -1,10 +1,6 @@
 import SwiftUI
 import NotPokerApi
 
-public struct ServerState /*: Decodable*/
-{
-	public var error : String?
-}
 
 
 //	we can't have a nullable GameServer as a @StateObject, but we may want to swap it, or allocate late
@@ -12,7 +8,7 @@ public struct ServerState /*: Decodable*/
 public class GameServerWrapper : ObservableObject
 {
 	public var				gameServer : GameServer? = nil
-	@Published public var	startupError : String? = nil
+	@Published public var	startupState : String = "init"
 
 	init()
 	{
@@ -20,56 +16,32 @@ public class GameServerWrapper : ObservableObject
 	}
 	
 	@MainActor // as we change published variables, we need to run on the main thread
-	public func Load(player: PlayerUid) async
-	{
-		do
-		{
-			let newGame = try GameServer_Offline()
-			try await newGame.Join(Player: player)
-			self.gameServer = newGame
-			startupError = nil
-		}
-		catch
-		{
-			//	show startup error
-			print("Error starting game: \(error.localizedDescription)")
-			startupError = error.localizedDescription
-		}
-	}
-}
-
-
-
-class ServerWrapper : ObservableObject
-{
-	public var				server : GameServer? = nil
-	@Published public var	state = ServerState()
-	public var				error : String?
-	{
-		return state.error
-	}
-	
-	@MainActor // as we change published variables, we need to run on the main thread
 	public func Connect(player: PlayerUid,serverType:GameServer.Type) async
 	{
 		do
 		{
-			await Task.sleep(milliseconds: 300)
-			server = try GameServer_Offline()
-			try await server?.Join(Player: player)
-			state.error = nil
+			startupState = "Allocating game..."
+			let newGame = try NotPokerApi.GameServer_Offline(gameType: "Minesweeper")
+			startupState = "Joining game..."
+			try await newGame.Join(Player: player)
+			startupState = "Joined"
+			self.gameServer = newGame
+			startupState = "Started game"
 		}
 		catch
 		{
-			state.error = error.localizedDescription
+			//	show startup error
+			startupState = "Error starting game: \(error.localizedDescription)"
 		}
 	}
 }
 
+
+
 struct AppView: View
 {
 	@State var playerUid : PlayerUid?// = PlayerUid("xx")
-	@StateObject var server = ServerWrapper()
+	@StateObject var server = GameServerWrapper()
 	
 	func ConnectToOfflineServer()
 	{
@@ -84,22 +56,28 @@ struct AppView: View
 		VStack()
 		{
 			//JavascriptSourceView(filename:"Games/Minesweeper.js")
+			JavascriptSourceView(filename:"Test_ImportedDefaultIsWrongExport.js")
+			
 
 			LoginView(playerUid: $playerUid)
 				.frame(maxWidth: .infinity, idealHeight: 40)
 
 			//	need to pick a server
-			if ( playerUid != nil && server.server == nil )
+			if ( playerUid != nil && server.gameServer == nil )
 			{
 				Button(action:ConnectToOfflineServer)
 				{
 					Label("Connect to offline server", systemImage:"network.slash")
+						.padding(20)
 				}
 			}
 			
-			if ( server.server != nil )
+			Label("State: \(server.startupState)", systemImage: "suit.club.fill")
+				.padding(20)
+
+			if ( server.gameServer != nil )
 			{
-				GameContainerView( gameServer: $server.server )
+				GameContainerView( gameServer: $server.gameServer )
 					.padding(20)
 					.frame(maxWidth: .infinity, maxHeight: .infinity)
 					.background( Color("GameBackground") )
