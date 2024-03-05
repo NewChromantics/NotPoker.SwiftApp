@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BF61DC282B979D33001C91E9 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF61DC272B979D33001C91E9 /* LoginView.swift */; };
 		BF70C2EE2B8B6C0A002B72C0 /* NotPokerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF70C2EA2B8B6C0A002B72C0 /* NotPokerApp.swift */; };
 		BF70C2EF2B8B6C0A002B72C0 /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF70C2EB2B8B6C0A002B72C0 /* AppView.swift */; };
 		BF70C2F32B8B6C9A002B72C0 /* Version.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = BF70C2F22B8B6C9A002B72C0 /* Version.xcconfig */; };
@@ -22,6 +23,7 @@
 
 /* Begin PBXFileReference section */
 		BF3EB1142B8B6B3400F1CA06 /* NotPoker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NotPoker.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BF61DC272B979D33001C91E9 /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		BF70C2E62B8B6C0A002B72C0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BF70C2E92B8B6C0A002B72C0 /* NotPoker.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = NotPoker.entitlements; sourceTree = "<group>"; };
 		BF70C2EA2B8B6C0A002B72C0 /* NotPokerApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotPokerApp.swift; sourceTree = "<group>"; };
@@ -87,6 +89,7 @@
 				BF70C2EA2B8B6C0A002B72C0 /* NotPokerApp.swift */,
 				BFDD95EF2B94A66200882472 /* JavascriptSourceView.swift */,
 				BF8A54352B8B7AD300AFCA7E /* GameContainerView.swift */,
+				BF61DC272B979D33001C91E9 /* LoginView.swift */,
 				BF70C2EB2B8B6C0A002B72C0 /* AppView.swift */,
 			);
 			path = Source;
@@ -182,6 +185,7 @@
 				BFDD95F02B94A66200882472 /* JavascriptSourceView.swift in Sources */,
 				BF8A54362B8B7AD300AFCA7E /* GameContainerView.swift in Sources */,
 				BF70C2EE2B8B6C0A002B72C0 /* NotPokerApp.swift in Sources */,
+				BF61DC282B979D33001C91E9 /* LoginView.swift in Sources */,
 				BF70C2EF2B8B6C0A002B72C0 /* AppView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

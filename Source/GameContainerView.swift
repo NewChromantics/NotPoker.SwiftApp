@@ -6,7 +6,8 @@ import NotPokerApi
 
 struct GameContainerView : View
 {
-	var gameServer : NotPokerApi.GameServer
+	//	gr: needs to be binding?
+	@Binding var gameServer : NotPokerApi.GameServer?
 	
 	var body: some View
 	{
@@ -14,8 +15,14 @@ struct GameContainerView : View
 	}
 }
 
-#Preview 
+
+struct BindingViewExample_2_Previews : PreviewProvider
 {
-	return GameContainerView( gameServer: GameServer_Null() )
+	@State static var game : GameServer? = GameServer_Null()
+
+	static var previews: some View
+	{
+		GameContainerView(gameServer: $game)
+	}
 }
 

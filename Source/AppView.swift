@@ -1,20 +1,11 @@
 import SwiftUI
 import NotPokerApi
 
-
-
-struct AppView: View
+public struct ServerState /*: Decodable*/
 {
-	var body: some View
-	{
-		//JavascriptSourceView(filename:"Games/Minesweeper.js")
-		
-		ContentView( player: PlayerUid("App player") )
-			.frame(maxWidth: .infinity, maxHeight: .infinity)
-			.background( Color("AppBackground") )
-			.foregroundColor(Color("AppForeground"))
-	}
+	public var error : String?
 }
+
 
 //	we can't have a nullable GameServer as a @StateObject, but we may want to swap it, or allocate late
 //	so we wrap it
@@ -49,66 +40,89 @@ public class GameServerWrapper : ObservableObject
 
 
 
-struct ContentView: View
+class ServerWrapper : ObservableObject
 {
-	public var player : PlayerUid
-	@StateObject var gameServer = GameServerWrapper()
-	var startupError : String?
+	public var				server : GameServer? = nil
+	@Published public var	state = ServerState()
+	public var				error : String?
 	{
-		return gameServer.startupError
+		return state.error
 	}
+	
+	@MainActor // as we change published variables, we need to run on the main thread
+	public func Connect(player: PlayerUid,serverType:GameServer.Type) async
+	{
+		do
+		{
+			await Task.sleep(milliseconds: 300)
+			server = try GameServer_Offline()
+			try await server?.Join(Player: player)
+			state.error = nil
+		}
+		catch
+		{
+			state.error = error.localizedDescription
+		}
+	}
+}
 
-	func InitGame()
+struct AppView: View
+{
+	@State var playerUid : PlayerUid?// = PlayerUid("xx")
+	@StateObject var server = ServerWrapper()
+	
+	func ConnectToOfflineServer()
 	{
 		Task()
 		{
-			await gameServer.Load(player: player)
+			await server.Connect(player: playerUid!, serverType: GameServer_Offline.self)
 		}
 	}
 	
 	var body: some View
 	{
-		if startupError != nil
-		{
-			Label("Startup error \(startupError!)", systemImage: "exclamationmark.triangle.fill")
-				.padding(8)	//	inner padding
-				.background(Color("ErrorBackground"))
-				.foregroundColor(Color("ErrorForeground"))
-				.cornerRadius(4)
-				.padding(4)	//	outer padding
-		}
-		
-
 		VStack()
 		{
-			if let game = gameServer as? NotPokerApi.GameServer
+			//JavascriptSourceView(filename:"Games/Minesweeper.js")
+
+			LoginView(playerUid: $playerUid)
+				.frame(maxWidth: .infinity, idealHeight: 40)
+
+			//	need to pick a server
+			if ( playerUid != nil && server.server == nil )
 			{
-				GameContainerView(gameServer: game)
+				Button(action:ConnectToOfflineServer)
+				{
+					Label("Connect to offline server", systemImage:"network.slash")
+				}
+			}
+			
+			if ( server.server != nil )
+			{
+				GameContainerView( gameServer: $server.server )
+					.padding(20)
+					.frame(maxWidth: .infinity, maxHeight: .infinity)
+					.background( Color("GameBackground") )
+					.foregroundColor(Color("GameForeground"))
+					.cornerRadius(12)
+					.padding(20)
 			}
 			else
 			{
-				Label("Waiting for game...", systemImage: "suit.club.fill")
+				//	show some splash screen
 			}
 		}
-		.padding(40)	//	inner padding
-		.frame(minWidth: 100,minHeight: 100)
-		.background(Color("GameBackground"))
-		.foregroundColor(Color("GameForeground"))
-		.background()
-		.cornerRadius(12)
-		.padding(20)	//	outerpadding
-		.onAppear()
-		{
-			InitGame()
-		}
-
-
+		.frame(alignment: .top)
 	}
 }
+
+
+
 
 #Preview 
 {
 	//ContentView( player: PlayerUid("PreviewPlayer") )
 	AppView()
+		.frame(minWidth: 200, maxWidth:400,minHeight:300)
 }
 
