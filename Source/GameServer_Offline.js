@@ -1,7 +1,111 @@
 import {Yield} from `./Games/PromiseQueue.js`
+import {PromiseQueue,CreatePromise} from './Games/PromiseQueue.js'
 
-let Server_Game = null;
-let Client_PlayerUid = null;
+
+
+
+class LocalServerInterface
+{
+	#Server_Game;	//	current game instance
+	#Server_PendingPlayerActions = {};	//	[PlayerUid] = Promise waiting to be fulfilled
+	
+	//	for multi local players, this needs to be a queue per client
+	#Client_StateChangedQueue = new PromiseQueue('Client_StateChangedQueue');
+	#Client_PlayerUid;
+	
+	get RunningGame()
+	{
+		if ( !this.#Server_Game )
+			throw `Accessing .RunningGame and no game running`;
+		return this.#Server_Game;
+	}
+	
+	async Client_WaitForNextState()
+	{
+		return await this.#Client_StateChangedQueue.WaitForNext();
+	}
+	
+	async Client_Connect(PlayerUid)
+	{
+		if ( !this.#Server_Game )
+			throw `No game running`;
+			
+		if ( !PlayerUid )
+			throw `Connect without player uid`;
+			
+		if ( this.#Client_PlayerUid )
+			throw `Local player is already registered (${this.#Client_PlayerUid})`;
+			
+		const Result = await this.#Server_Game.AddPlayer(PlayerUid);
+		
+		//	set only if successfully joined
+		this.#Client_PlayerUid = PlayerUid;
+		return Result;
+	}
+	
+	Client_SendActionReply(Action,ActionArguments)
+	{
+		const Reply = {};
+		Reply.Action = Action;
+		Reply.ActionArguments = ActionArguments;
+		
+		const PlayerUid = this.#Client_PlayerUid;
+		if ( !this.#Server_PendingPlayerActions.hasOwnProperty(PlayerUid) )
+		{
+			throw `There's no pending player action`;
+		}
+		this.#Server_PendingPlayerActions[PlayerUid].Resolve( Reply );
+	}
+	
+	
+	async Server_SetGame(Game)
+	{
+		this.#Server_Game = Game;
+	}
+	
+	
+	async Server_SendMoveAndWait(PlayerUid,Move)
+	{
+		//return await Room.SendToPlayerAndWaitForReply('Move', Player, Move );
+		if ( this.#Server_PendingPlayerActions.hasOwnProperty(PlayerUid) )
+		{
+			throw `There's already a pending promise for player ${PlayerUid} for new action`;
+		}
+		
+		console.log(`Server_SendMoveAndWait`);
+		const NewPromise = CreatePromise();
+		this.#Server_PendingPlayerActions[PlayerUid] = NewPromise;
+		
+		//	notify player they have something to do (+state?)
+		this.#Client_StateChangedQueue.Push(Move);
+		
+		//	wait for reply
+		console.log(`Server waiting for reply...`);
+		const Reply = await NewPromise;
+		
+		//	clear promise
+		delete this.#Server_PendingPlayerActions[PlayerUid];
+		
+		return Reply;
+	}
+	
+	async Server_BroadcastState(State)
+	{
+		//Room.SendToAllPlayers('State',State);
+		this.#Client_StateChangedQueue.Push(State);
+	}
+	
+	async Server_OnAction(Action)
+	{
+		this.#Client_StateChangedQueue.Push(Action);
+	}
+}
+
+
+
+const LocalServer = new LocalServerInterface();
+
+
 
 async function Allocate(GameName)
 {
@@ -11,34 +115,44 @@ async function Allocate(GameName)
 	const GameConstructor = Module.default;
 	console.log(`Allocating game; ${GameConstructor.name}`);
 	const NewGame = new GameConstructor( console.log );
-	Server_Game = NewGame;
+	
+	LocalServer.Server_SetGame( NewGame );
 
-	return Server_Game;
+	return NewGame;
 }
 
-async function WaitForNextGameState()
+async function Server_RunGameServer()
 {
-	console.log(`WaitForNextGameState entering yield`);
-	//	gr: this nbever resolves!
-	//await Yield(10);
-	console.log(`WaitForNextGameState exit yield`);
-
-	const NewState = {};
-	NewState.Test = "Hello";
+	const Game = LocalServer.RunningGame;
 	
+	//	wait for game to finish
+	function OnStateChanged()
+	{
+		const State = Game.GetPublicState();
+		LocalServer.Server_BroadcastState.call( LocalServer, State );
+	}
+	
+	const SendMoveAndWait = LocalServer.Server_SendMoveAndWait.bind(LocalServer);
+	const OnAction = LocalServer.Server_OnAction.bind(LocalServer);
+	
+	await Game.WaitForEnoughPlayers();
+	const GameResult = await Game.RunGame( SendMoveAndWait, OnStateChanged, OnAction );
+	
+	LocalServer.Server_SetGame( null );
+	await Yield(1*1000);
+	
+	return GameResult;
+}
+
+async function Client_WaitForNextState()
+{
+	console.log(`Client_WaitForNextState...`);
+	const NewState = await LocalServer.Client_WaitForNextState();
+	console.log(`Client got new state ${NewState}`);
 	return JSON.stringify(NewState);
 }
 
 async function AddPlayer(PlayerUid)
 {
-	console.log(`AddPlayer... Server_Game=${Server_Game}`);
-	if ( !Server_Game )
-		throw `No game running`;
-	
-	const Result = await Server_Game.AddPlayer(PlayerUid);
-
-	//	set only if successfully joined
-	Client_PlayerUid = PlayerUid;
-	
-	return Result;
+	return await LocalServer.Client_Connect(PlayerUid);
 }
