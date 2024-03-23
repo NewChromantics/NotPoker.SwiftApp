@@ -4,6 +4,7 @@ import NotPokerApi
 
 
 
+
 struct GameContainerView : View
 {
 	//	gr: needs to be binding?
@@ -11,15 +12,36 @@ struct GameContainerView : View
 	@StateObject var gameServer : GameServerWrapper
 
 	
+	func WaitingForGameView() -> some View
+	{
+		Label("Waiting for game...", systemImage: "suit.heart.fill")
+	}
+	
+	func MinesweeperGameView(_ state:ClientGameState) -> some View
+	{
+		Label("Minesweeper!", systemImage: "flag.checkered")
+	}
+
+	
+	func DebugGameView(_ state:ClientGameState) -> some View
+	{
+		let GameName = state.gameType ?? "null"
+		return Label("Playing \(GameName)", systemImage: "suit.heart.fill")
+	}
+
+	
 	var body: some View
 	{
-		if let game = gameServer.Client_LastStateJson.gameType
+		switch gameServer.Client_LastStateJson.gameType
 		{
-			Label("Playing \(game)", systemImage: "suit.heart.fill")
-		}
-		else
-		{
-			Label("Waiting for game...", systemImage: "suit.heart.fill")
+		case nil:
+			WaitingForGameView()
+			
+		case "Minesweeper":
+			MinesweeperGameView(gameServer.Client_LastStateJson)
+			
+		default:
+			DebugGameView(gameServer.Client_LastStateJson)
 		}
 	}
 }
