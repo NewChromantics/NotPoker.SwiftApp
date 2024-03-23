@@ -20,8 +20,8 @@ struct DebugActionView : View
 		{
 			//let ValuesDebug = selectedValues.compactMap({String(describing: $0)}).joined(separator:",")
 			//print("Player run action \(key) with \(ValuesDebug)")
-			var Reply = ClientActionReply(Action:actionName)
-			Reply.Arguments = selectedValues
+			var Reply = ActionReply(Action:actionName)
+			Reply.ActionArguments = selectedValues
 			try state.OnUserClickedAction( Reply )
 		}
 		catch

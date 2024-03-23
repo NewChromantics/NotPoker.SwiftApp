@@ -82,7 +82,8 @@ class LocalServerInterface
 		//	wait for reply
 		console.log(`Server waiting for reply...`);
 		const Reply = await NewPromise;
-		
+		console.log(`Server got reply: ${JSON.stringify(Reply)}`);
+
 		//	clear promise
 		delete this.#Server_PendingPlayerActions[PlayerUid];
 		
@@ -157,6 +158,12 @@ async function Client_WaitForNextState()
 	console.log(`Client_WaitForNextState...`);
 	const NewState = await LocalServer.Client_WaitForNextState();
 	return JSON.stringify(NewState);
+}
+
+function Client_SendActionReply(ReplyJson)
+{
+	const Reply = JSON.parse(ReplyJson);
+	LocalServer.Client_SendActionReply( Reply.Action, Reply.ActionArguments );
 }
 
 async function AddPlayer(PlayerUid)

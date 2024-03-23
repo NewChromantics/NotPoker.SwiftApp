@@ -2,189 +2,14 @@ import SwiftUI
 import NotPokerApi
 
 
-class ActionArgumentValue : Encodable, Decodable, Equatable, Identifiable, Hashable, CustomStringConvertible
-{
-	var ValueAsString : String
-
-	static func == (lhs: ActionArgumentValue, rhs: ActionArgumentValue) -> Bool
-	{
-		lhs.ValueAsString == rhs.ValueAsString
-	}
-	
-	func hash(into hasher: inout Hasher) 
-	{
-		hasher.combine(ValueAsString)
-	}
-	
-	//	each value should be unique, so can use it as a key
-	var id : ObjectIdentifier
-	{
-		return ObjectIdentifier(self)
-	}
-	
-	public var description: String
-	{
-		return ValueAsString
-	}
-
-	init()
-	{
-		ValueAsString = ""
-	}
-		
-	required init(from decoder: Decoder) throws
-	{
-		if let int = try? decoder.singleValueContainer().decode(Int.self) {
-			ValueAsString = "\(int)"
-			return
-		}
-		
-		if let string = try? decoder.singleValueContainer().decode(String.self) {
-			ValueAsString = string
-			return
-		}
-		/*
-		if let string = try? decoder.singleValueContainer().decode([Int].self) {
-			self = .arrayOfInts(string)
-			return
-		}*/
-		
-		throw QuantumError.missingValue
-	}
-	
-	enum QuantumError:Error 
-	{
-		case missingValue
-	}
-}
-
-public struct ActionMeta : Decodable, CustomStringConvertible
-{
-	public var description: String
-	{
-		return "ActionMeta"
-	}
-	
-	var Key : String?
-	//var Arguments : [[Int]]	//	array of an array in minesweeper!
-	var Arguments : [[ActionArgumentValue]]
-	/*
-	enum CodingKeys: String, CodingKey
-	{
-		case isAll = "is_all"
-		case values, include
-	}
-	 */
-}
-
-//	https://stackoverflow.com/a/50257595/355753
-//	json where we don't know the keys
-//	Actions:{ Action1:{}, Action2:{}
-public struct ActionList : Decodable
-{
-	public var Actions: [String: ActionMeta] = [:]
-	
-
-	struct ActionKey: CodingKey
-	{
-		var stringValue: String
-		var intValue: Int?
-		
-		init?(stringValue: String)
-		{
-			self.stringValue = stringValue
-		}
-
-		init?(intValue: Int)
-		{
-			self.stringValue = "\(intValue)";
-			self.intValue = intValue
-		}
-	}
-
-	public init()
-	{
-	}
-	
-	//	manually decode object keys
-	public init(from decoder: Decoder) throws
-	{
-		let container = try decoder.container(keyedBy: ActionKey.self)
-
-		var actions = [String: ActionMeta]()
-		
-		for key in container.allKeys 
-		{
-			if let model = try? container.decode(ActionMeta.self, forKey: key)
-			{
-				actions[key.stringValue] = model
-			}
-			else if let bool = try? container.decode(Bool.self, forKey: key)
-			{
-				//self.any = any
-			}
-		}
-
-		self.Actions = actions
-	}
-	
-}
-
-
-public struct ClientActionReply : Codable
-{
-	var Action: String
-	var Arguments : [ActionArgumentValue] = []
-}
-
-struct GameStateBase : Decodable
-{
-	var GameType : String?
-	var Error : String?
-	var Actions = ActionList()
-	//var BadMode : String?
-	
-	init()
-	{
-		Error = nil
-		GameType = nil
-	}
-	
-	init(Error: String)
-	{
-		self.Error = Error
-	}
-}
-
-
-public struct ThrowingPobs
-{
-	var Callback : () throws -> Void
-	
-	public func CallTheCallback() throws
-	{
-		try! Callback()
-	}
-	
-	init()
-	{
-		Callback = ThrowingPobs.DefaultCallback
-	}
-	
-	
-	static func DefaultCallback() throws
-	{
-		throw RuntimeError("default callback bad")
-	}
-}
 
 
 public struct ClientGameState
 {
 	var StateJson : String?
-	var OnUserClickedActionCallback : (_ ActionReply:ClientActionReply) throws -> Void
+	var OnUserClickedActionCallback : (_ ActionReply:ActionReply) throws -> Void
 
-	public func OnUserClickedAction(_ ActionReply:ClientActionReply) throws
+	public func OnUserClickedAction(_ ActionReply:ActionReply) throws
 	{
 		try OnUserClickedActionCallback( ActionReply )
 	}
@@ -195,13 +20,13 @@ public struct ClientGameState
 		OnUserClickedActionCallback = ClientGameState.DefaultOnUserClickedAction
 	}
 	
-	init(_ json:String)
+	init(_ json:String, ActionReplyCallback:@escaping (_ ActionReply:ActionReply) throws -> Void)
 	{
 		StateJson = json
-		OnUserClickedActionCallback = ClientGameState.DefaultOnUserClickedAction
+		OnUserClickedActionCallback = ActionReplyCallback
 	}
 	
-	static func DefaultOnUserClickedAction(ActionReply:ClientActionReply) throws
+	static func DefaultOnUserClickedAction(ActionReply:ActionReply) throws
 	{
 		let ReplyJsonBytes = try! JSONEncoder().encode(ActionReply)
 		let ReplyJson = String(data: ReplyJsonBytes, encoding: .utf8)!
@@ -257,6 +82,12 @@ public class GameServerWrapper : ObservableObject
 		
 	}
 	
+	
+	//	gr: _maybe_ this should be async
+	func SendActionReply(ActionReply:ActionReply) throws
+	{
+		try gameServer!.SendActionReply( ActionReply )
+	}
 
 	@MainActor	//	changes published variable, so must run on main thread
 	func RunClientGame() async throws
@@ -266,8 +97,8 @@ public class GameServerWrapper : ObservableObject
 			//	we keep getting states, and we dont really want to overwrite the old one until the UI has finished
 			//	but that might be hard to control the UI, or wait for a semaphore...
 			//	and the game is setup as STATE, so we can just override it, and the UI just moves along when it wants to
-			let NewStateJson = try! await gameServer!.WaitForNextState()
-			let NewState = ClientGameState(NewStateJson)
+			let NewStateJson = try await gameServer!.WaitForNextState()
+			let NewState = ClientGameState( NewStateJson, ActionReplyCallback: SendActionReply )
 			
 			//print("New client state json; gameType = \(NewState.gameType)")
 			
