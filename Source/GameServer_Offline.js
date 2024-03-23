@@ -132,7 +132,15 @@ async function Server_RunGameServer()
 		LocalServer.Server_BroadcastState.call( LocalServer, State );
 	}
 	
-	const SendMoveAndWait = LocalServer.Server_SendMoveAndWait.bind(LocalServer);
+	function SendMoveAndWait(PlayerUid,Move)
+	{
+		//	add state to output
+		//	gr: maybe needs to be in more generic code...
+		const State = Game.GetPublicState();
+		const Message = Object.assign( {}, Move, State );
+		return LocalServer.Server_SendMoveAndWait.call(LocalServer, PlayerUid, Message );
+	}
+	
 	const OnAction = LocalServer.Server_OnAction.bind(LocalServer);
 	
 	await Game.WaitForEnoughPlayers();
@@ -148,7 +156,6 @@ async function Client_WaitForNextState()
 {
 	console.log(`Client_WaitForNextState...`);
 	const NewState = await LocalServer.Client_WaitForNextState();
-	console.log(`Client got new state ${NewState}`);
 	return JSON.stringify(NewState);
 }
 
