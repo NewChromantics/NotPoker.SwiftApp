@@ -52,27 +52,27 @@ struct DebugActionView : View
 	{
 		VStack
 		{
-			HStack()
+			Button(action: OnRunAction)
 			{
-				Button(action: OnRunAction)
-				{
-					Label("Action \(actionName)", systemImage: "bolt.fill")
-				}
+				Label("Action \(actionName)", systemImage: "bolt.fill")
+			}
+		}
+		//	gr: the button isn't clickable on ios when in the same VStack, the pickers get caught...
+		VStack
+		{
+			//Text(value.description)
+			//ForEach( Array(value.Arguments) )
+			ForEach(0..<actionMeta.Arguments.count, id: \.self)
+			{
+				ArgumentIndex in
+				let Values = actionMeta.Arguments[ArgumentIndex]
 				
-				//Text(value.description)
-				//ForEach( Array(value.Arguments) )
-				ForEach(0..<actionMeta.Arguments.count, id: \.self)
+				Picker("Arg#\(ArgumentIndex)", selection: $selectedValues[ArgumentIndex])
 				{
-					ArgumentIndex in
-					let Values = actionMeta.Arguments[ArgumentIndex]
-					
-					Picker("Arg#\(ArgumentIndex)", selection: $selectedValues[ArgumentIndex])
+					ForEach( Values )
 					{
-						ForEach( Values )
-						{
-							value in
-							Text("\(value.description)").tag(value)
-						}
+						value in
+						Text("\(value.description)").tag(value)
 					}
 				}
 			}

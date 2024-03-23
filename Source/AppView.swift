@@ -326,44 +326,68 @@ struct AppView: View
 		}
 	}
 	
-	var body: some View
+	func GameStateView() -> some View
 	{
 		VStack()
 		{
-			//JavascriptSourceView(filename:"Games/Minesweeper.js")
-			//JavascriptSourceView(filename:"Test_ImportedDefaultIsWrongExport.js")
 			
-
-			LoginView(playerUid: $playerUid)
-				.frame(maxWidth: .infinity, idealHeight: 40)
-
 			//	need to pick a server/setup a game
 			if ( playerUid != nil && server.gameServer == nil )
 			{
 				Button(action:ConnectToOfflineServer)
 				{
 					Label("Connect to offline server", systemImage:"network.slash")
-						.padding(20)
+						.padding(10)
+						.frame(maxWidth: .infinity)
+						//.background(Color.red)	//	show clickable area
 				}
+				.frame(maxWidth: .infinity, idealHeight: 30)
+				.padding(10)
+				.background( Color("ServerBrowserBackground") )
+				.foregroundColor(Color("ServerBrowserForeground"))
+				.cornerRadius(12)
+				.padding(10)
 			}
+		
+			let GameStateIcon = (server.gameServer==nil) ? "suit.club" : "suit.club.fill"
+			Label("State: \(server.startupState)", systemImage:GameStateIcon)
+				.padding(10)
 			
-			Label("State: \(server.startupState)", systemImage: "suit.club.fill")
-				.padding(20)
-
 			if ( server.gameServer != nil )
 			{
 				GameContainerView( gameServer: server )
-					.padding(20)
+					.padding(10)
 					.frame(maxWidth: .infinity, maxHeight: .infinity)
 					.background( Color("GameBackground") )
 					.foregroundColor(Color("GameForeground"))
 					.cornerRadius(12)
-					.padding(20)
+					.padding(10)
 			}
 			else
 			{
 				//	show some splash screen
 			}
+		}
+	}
+	
+	
+	var body: some View
+	{
+		VStack()
+		{
+			//JavascriptSourceView(filename:"Games/Minesweeper.js")
+			//JavascriptSourceView(filename:"Test_ImportedDefaultIsWrongExport.js")
+
+			LoginView(playerUid: $playerUid)
+				.frame(maxWidth: .infinity, idealHeight: 30)
+				.padding(10)
+				.background( Color("LoginBackground") )
+				.foregroundColor(Color("LoginForeground"))
+				.cornerRadius(12)
+				.padding(10)
+
+			GameStateView()
+
 		}
 		.frame(alignment: .top)
 	}

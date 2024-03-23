@@ -39,6 +39,8 @@ struct LoginView: View
 			{
 				Label("Log in", systemImage:"person")
 					.padding(10)
+					.frame(maxWidth: .infinity)
+					//.background(Color.red)	//	show clickable area
 			}
 		}
 		else
