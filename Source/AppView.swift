@@ -2,7 +2,7 @@ import SwiftUI
 import NotPokerApi
 
 
-class ActionArgumentValue : Decodable, Equatable, Identifiable, Hashable
+class ActionArgumentValue : Decodable, Equatable, Identifiable, Hashable, CustomStringConvertible
 {
 	var ValueAsString : String
 
