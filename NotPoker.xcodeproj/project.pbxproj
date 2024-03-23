@@ -9,6 +9,13 @@
 /* Begin PBXBuildFile section */
 		BF2DA3982BAF3D4100757949 /* DebugGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2DA3972BAF3D4100757949 /* DebugGameView.swift */; };
 		BF2DA39A2BAF3DF900757949 /* MinesweeperGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2DA3992BAF3DF900757949 /* MinesweeperGameView.swift */; };
+		BF2DA39D2BAF531200757949 /* BitCollections in Frameworks */ = {isa = PBXBuildFile; productRef = BF2DA39C2BAF531200757949 /* BitCollections */; };
+		BF2DA39F2BAF531200757949 /* Collections in Frameworks */ = {isa = PBXBuildFile; productRef = BF2DA39E2BAF531200757949 /* Collections */; };
+		BF2DA3A12BAF531200757949 /* DequeModule in Frameworks */ = {isa = PBXBuildFile; productRef = BF2DA3A02BAF531200757949 /* DequeModule */; };
+		BF2DA3A32BAF531200757949 /* HashTreeCollections in Frameworks */ = {isa = PBXBuildFile; productRef = BF2DA3A22BAF531200757949 /* HashTreeCollections */; };
+		BF2DA3A52BAF531200757949 /* HeapModule in Frameworks */ = {isa = PBXBuildFile; productRef = BF2DA3A42BAF531200757949 /* HeapModule */; };
+		BF2DA3A72BAF531200757949 /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = BF2DA3A62BAF531200757949 /* OrderedCollections */; };
+		BF2DA3A92BAF531200757949 /* _RopeModule in Frameworks */ = {isa = PBXBuildFile; productRef = BF2DA3A82BAF531200757949 /* _RopeModule */; };
 		BF61DC282B979D33001C91E9 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF61DC272B979D33001C91E9 /* LoginView.swift */; };
 		BF61DC2A2B97B4D9001C91E9 /* GameServer_Offline.js in Resources */ = {isa = PBXBuildFile; fileRef = BF61DC292B97B4D9001C91E9 /* GameServer_Offline.js */; };
 		BF61DC2C2B97CCD1001C91E9 /* Test_ImportedDefaultIsWrongExport.js in Resources */ = {isa = PBXBuildFile; fileRef = BF61DC2B2B97CCD1001C91E9 /* Test_ImportedDefaultIsWrongExport.js */; };
@@ -51,6 +58,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BF2DA3A32BAF531200757949 /* HashTreeCollections in Frameworks */,
+				BF2DA39F2BAF531200757949 /* Collections in Frameworks */,
+				BF2DA3A12BAF531200757949 /* DequeModule in Frameworks */,
+				BF2DA39D2BAF531200757949 /* BitCollections in Frameworks */,
+				BF2DA3A52BAF531200757949 /* HeapModule in Frameworks */,
+				BF2DA3A72BAF531200757949 /* OrderedCollections in Frameworks */,
+				BF2DA3A92BAF531200757949 /* _RopeModule in Frameworks */,
 				BF8A54392B8B7DC900AFCA7E /* NotPokerApi in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -140,6 +154,13 @@
 			name = NotPoker;
 			packageProductDependencies = (
 				BF8A54382B8B7DC900AFCA7E /* NotPokerApi */,
+				BF2DA39C2BAF531200757949 /* BitCollections */,
+				BF2DA39E2BAF531200757949 /* Collections */,
+				BF2DA3A02BAF531200757949 /* DequeModule */,
+				BF2DA3A22BAF531200757949 /* HashTreeCollections */,
+				BF2DA3A42BAF531200757949 /* HeapModule */,
+				BF2DA3A62BAF531200757949 /* OrderedCollections */,
+				BF2DA3A82BAF531200757949 /* _RopeModule */,
 			);
 			productName = NotPoker;
 			productReference = BF3EB1142B8B6B3400F1CA06 /* NotPoker.app */;
@@ -171,6 +192,7 @@
 			mainGroup = BF3EB10B2B8B6B3400F1CA06;
 			packageReferences = (
 				BF8A54312B8B719600AFCA7E /* XCLocalSwiftPackageReference "NotPokerApi/Client.SwiftPackage" */,
+				BF2DA39B2BAF531200757949 /* XCRemoteSwiftPackageReference "swift-collections" */,
 			);
 			productRefGroup = BF3EB1152B8B6B3400F1CA06 /* Products */;
 			projectDirPath = "";
@@ -423,7 +445,53 @@
 		};
 /* End XCLocalSwiftPackageReference section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		BF2DA39B2BAF531200757949 /* XCRemoteSwiftPackageReference "swift-collections" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-collections.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
+		BF2DA39C2BAF531200757949 /* BitCollections */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BF2DA39B2BAF531200757949 /* XCRemoteSwiftPackageReference "swift-collections" */;
+			productName = BitCollections;
+		};
+		BF2DA39E2BAF531200757949 /* Collections */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BF2DA39B2BAF531200757949 /* XCRemoteSwiftPackageReference "swift-collections" */;
+			productName = Collections;
+		};
+		BF2DA3A02BAF531200757949 /* DequeModule */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BF2DA39B2BAF531200757949 /* XCRemoteSwiftPackageReference "swift-collections" */;
+			productName = DequeModule;
+		};
+		BF2DA3A22BAF531200757949 /* HashTreeCollections */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BF2DA39B2BAF531200757949 /* XCRemoteSwiftPackageReference "swift-collections" */;
+			productName = HashTreeCollections;
+		};
+		BF2DA3A42BAF531200757949 /* HeapModule */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BF2DA39B2BAF531200757949 /* XCRemoteSwiftPackageReference "swift-collections" */;
+			productName = HeapModule;
+		};
+		BF2DA3A62BAF531200757949 /* OrderedCollections */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BF2DA39B2BAF531200757949 /* XCRemoteSwiftPackageReference "swift-collections" */;
+			productName = OrderedCollections;
+		};
+		BF2DA3A82BAF531200757949 /* _RopeModule */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BF2DA39B2BAF531200757949 /* XCRemoteSwiftPackageReference "swift-collections" */;
+			productName = _RopeModule;
+		};
 		BF8A54382B8B7DC900AFCA7E /* NotPokerApi */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = BF8A54312B8B719600AFCA7E /* XCLocalSwiftPackageReference "NotPokerApi/Client.SwiftPackage" */;

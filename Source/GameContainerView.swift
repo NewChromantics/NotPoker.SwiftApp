@@ -20,16 +20,19 @@ struct GameContainerView : View
 	
 	var body: some View
 	{
-		switch gameServer.Client_LastStateJson.gameType
+		VStack()
 		{
-		case nil:
-			WaitingForGameView()
-			
-		case "Minesweeper":
-			MinesweeperGameView( state: $gameServer.Client_LastStateJson )
-			
-		default:
-			DebugGameView( state: $gameServer.Client_LastStateJson )
+			switch gameServer.Client_LastStateJson.gameType
+			{
+			case nil:
+				WaitingForGameView()
+				/*
+				 case "Minesweeper":
+				 MinesweeperGameView( state: $gameServer.Client_LastStateJson )
+				 */
+			default:
+				DebugGameView( state: $gameServer.Client_LastStateJson )
+			}
 		}
 	}
 }

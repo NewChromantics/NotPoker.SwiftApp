@@ -2,13 +2,132 @@ import SwiftUI
 import NotPokerApi
 
 
+class ActionArgumentValue : Decodable, Equatable, Identifiable
+{
+	var ValueAsString : String
+
+	static func == (lhs: ActionArgumentValue, rhs: ActionArgumentValue) -> Bool
+	{
+		lhs.ValueAsString == rhs.ValueAsString
+	}
+	
+	//	each value should be unique, so can use it as a key
+	var id : ObjectIdentifier
+	{
+		return ObjectIdentifier(self)
+	}
+	
+	public var description: String
+	{
+		return ValueAsString
+	}
+
+		
+	required init(from decoder: Decoder) throws
+	{
+		if let int = try? decoder.singleValueContainer().decode(Int.self) {
+			ValueAsString = "\(int)"
+			return
+		}
+		
+		if let string = try? decoder.singleValueContainer().decode(String.self) {
+			ValueAsString = string
+			return
+		}
+		/*
+		if let string = try? decoder.singleValueContainer().decode([Int].self) {
+			self = .arrayOfInts(string)
+			return
+		}*/
+		
+		throw QuantumError.missingValue
+	}
+	
+	enum QuantumError:Error 
+	{
+		case missingValue
+	}
+}
+
+public struct ActionMeta : Decodable, CustomStringConvertible
+{
+	public var description: String
+	{
+		return "ActionMeta"
+	}
+	
+	var Key : String?
+	//var Arguments : [[Int]]	//	array of an array in minesweeper!
+	var Arguments : [[ActionArgumentValue]]
+	/*
+	enum CodingKeys: String, CodingKey
+	{
+		case isAll = "is_all"
+		case values, include
+	}
+	 */
+}
+
+//	https://stackoverflow.com/a/50257595/355753
+//	json where we don't know the keys
+//	Actions:{ Action1:{}, Action2:{}
+public struct ActionList : Decodable
+{
+	public var Actions: [String: ActionMeta] = [:]
+	
+
+	struct ActionKey: CodingKey
+	{
+		var stringValue: String
+		var intValue: Int?
+		
+		init?(stringValue: String)
+		{
+			self.stringValue = stringValue
+		}
+
+		init?(intValue: Int)
+		{
+			self.stringValue = "\(intValue)";
+			self.intValue = intValue
+		}
+	}
+
+	public init()
+	{
+	}
+	
+	//	manually decode object keys
+	public init(from decoder: Decoder) throws
+	{
+		let container = try decoder.container(keyedBy: ActionKey.self)
+
+		var actions = [String: ActionMeta]()
+		
+		for key in container.allKeys 
+		{
+			if let model = try? container.decode(ActionMeta.self, forKey: key)
+			{
+				actions[key.stringValue] = model
+			}
+			else if let bool = try? container.decode(Bool.self, forKey: key)
+			{
+				//self.any = any
+			}
+		}
+
+		self.Actions = actions
+	}
+	
+}
 
 
-struct GameStateBase : Codable
+
+struct GameStateBase : Decodable
 {
 	var GameType : String?
 	var Error : String?
-	//var Actions : []
+	var Actions = ActionList()
 	//var BadMode : String?
 	
 	init()
@@ -23,9 +142,10 @@ struct GameStateBase : Codable
 	}
 }
 
-public struct ClientGameState /*: ObservableObject*/
+public struct ClientGameState
 {
-	/*@Published */var StateJson : String?
+	var StateJson : String?
+	
 
 	init()
 	{
@@ -62,6 +182,11 @@ public struct ClientGameState /*: ObservableObject*/
 		}
 	}
 
+	public var actions : [String: ActionMeta]
+	{
+		let State = GetClientState()
+		return State.Actions.Actions
+	}
 }
 
 
