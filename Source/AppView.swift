@@ -2,13 +2,18 @@ import SwiftUI
 import NotPokerApi
 
 
-class ActionArgumentValue : Decodable, Equatable, Identifiable
+class ActionArgumentValue : Decodable, Equatable, Identifiable, Hashable
 {
 	var ValueAsString : String
 
 	static func == (lhs: ActionArgumentValue, rhs: ActionArgumentValue) -> Bool
 	{
 		lhs.ValueAsString == rhs.ValueAsString
+	}
+	
+	func hash(into hasher: inout Hasher) 
+	{
+		hasher.combine(ValueAsString)
 	}
 	
 	//	each value should be unique, so can use it as a key
@@ -22,6 +27,10 @@ class ActionArgumentValue : Decodable, Equatable, Identifiable
 		return ValueAsString
 	}
 
+	init()
+	{
+		ValueAsString = ""
+	}
 		
 	required init(from decoder: Decoder) throws
 	{

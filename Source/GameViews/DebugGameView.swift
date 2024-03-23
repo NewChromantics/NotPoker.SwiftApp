@@ -5,17 +5,55 @@ import Collections
 
 
 
-struct DebugGameView : View
+struct DebugActionView : View
 {
-	@Binding var state : ClientGameState
-
-	@State private var numberOfPeople = "0"
+	@State private var selectedValue = ActionArgumentValue()
+	var key : String
+	var actionMeta : ActionMeta
+	
 	
 	func OnRunAction(_ actionKey:String)
 	{
 		print("Player run action \(actionKey)")
 	}
 	
+	
+	var body: some View
+	{
+		HStack()
+		{
+			Button(action: { OnRunAction(key) } )
+			{
+				Label("Action \(key)", systemImage: "suit.heart")
+			}
+			
+			//Text(value.description)
+			//ForEach( Array(value.Arguments) )
+			ForEach(0..<actionMeta.Arguments.count, id: \.self)
+			{
+				ArgumentIndex in
+				let Values = actionMeta.Arguments[ArgumentIndex]
+				
+				Picker("Arg#\(ArgumentIndex)", selection: $selectedValue)
+				{
+					ForEach( Values )
+					{
+						value in
+						Text("\(value.description)").tag(value)
+					}
+				}
+			}
+			
+		}
+	}
+}
+
+
+struct DebugGameView : View
+{
+	@Binding var state : ClientGameState
+
+		
 	var body: some View
 	{
 		let GameName = state.gameType ?? "null"
@@ -24,41 +62,12 @@ struct DebugGameView : View
 		//	if actions are present, render them as options
 		List
 		{
-			let dict = state.actions
-			let orderedDict = OrderedDictionary(uniqueKeys: dict.keys, values: dict.values)
-			ForEach( Array(orderedDict), id: \.key)
+			ForEach( Array(state.actions), id: \.key)
 			{
-				key, value in
-				HStack()
-				{
-					Button(action: { OnRunAction(key) } )
-					{
-						Label("Action \(key)", systemImage: "suit.heart")
-					}
-					
-					
-					
-					//Text(value.description)
-					//ForEach( Array(value.Arguments) )
-					ForEach(0..<value.Arguments.count, id: \.self)
-					{
-						ArgumentIndex in
-						let Values = value.Arguments[ArgumentIndex]
-						
-						Picker("Arg#\(ArgumentIndex)", selection: $numberOfPeople)
-						{
-							ForEach( Values )
-							{
-								value in
-								Text("\(value.description)").tag(value.description)
-							}
-						}
-					}
-					
-				}
+				actionKey, actionMeta in
+				DebugActionView( key: actionKey, actionMeta: actionMeta )
 			}
 		}
-		.foregroundColor(Color.black)
 		
 		//	show the raw json
 		ScrollView
