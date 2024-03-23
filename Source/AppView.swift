@@ -62,7 +62,11 @@ public struct ClientGameState
 	public var actions : [String: ActionMeta]
 	{
 		let State = GetClientState()
-		return State.Actions.Actions
+		if let actions = State.Actions
+		{
+			return actions.Actions
+		}
+		return [:]
 	}
 }
 
@@ -107,6 +111,15 @@ public class GameServerWrapper : ObservableObject
 			{
 				Client_LastStateJson = NewState
 				print("New client state json; gameType = \(NewState.gameType)")
+			}
+			else
+			{
+				let State = NewState.GetClientState()
+				if ( State.Error != nil )
+				{
+					throw RuntimeError(State.Error!)
+				}
+				throw RuntimeError("Need all states to have .GameType now \(NewState)")
 			}
 
 			//	if game finished, break

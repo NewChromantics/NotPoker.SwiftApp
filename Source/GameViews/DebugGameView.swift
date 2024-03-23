@@ -42,7 +42,7 @@ struct DebugActionView : View
 		{
 			let ArgumentValues = actionMeta.Arguments[index]
 			let DefaultSelectonValue = ArgumentValues[0]
-			print("default for \(index) = \(DefaultSelectonValue)")
+			//print("default for \(index) = \(DefaultSelectonValue)")
 			defaultValues.append(DefaultSelectonValue)
 		}
 		selectedValues = defaultValues
