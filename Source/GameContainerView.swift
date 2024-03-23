@@ -17,18 +17,6 @@ struct GameContainerView : View
 		Label("Waiting for game...", systemImage: "suit.heart.fill")
 	}
 	
-	func MinesweeperGameView(_ state:ClientGameState) -> some View
-	{
-		Label("Minesweeper!", systemImage: "flag.checkered")
-	}
-
-	
-	func DebugGameView(_ state:ClientGameState) -> some View
-	{
-		let GameName = state.gameType ?? "null"
-		return Label("Playing \(GameName)", systemImage: "suit.heart.fill")
-	}
-
 	
 	var body: some View
 	{
@@ -38,10 +26,10 @@ struct GameContainerView : View
 			WaitingForGameView()
 			
 		case "Minesweeper":
-			MinesweeperGameView(gameServer.Client_LastStateJson)
+			MinesweeperGameView( state: $gameServer.Client_LastStateJson )
 			
 		default:
-			DebugGameView(gameServer.Client_LastStateJson)
+			DebugGameView( state: $gameServer.Client_LastStateJson )
 		}
 	}
 }

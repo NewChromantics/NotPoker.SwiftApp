@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BF2DA3982BAF3D4100757949 /* DebugGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2DA3972BAF3D4100757949 /* DebugGameView.swift */; };
+		BF2DA39A2BAF3DF900757949 /* MinesweeperGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2DA3992BAF3DF900757949 /* MinesweeperGameView.swift */; };
 		BF61DC282B979D33001C91E9 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF61DC272B979D33001C91E9 /* LoginView.swift */; };
 		BF61DC2A2B97B4D9001C91E9 /* GameServer_Offline.js in Resources */ = {isa = PBXBuildFile; fileRef = BF61DC292B97B4D9001C91E9 /* GameServer_Offline.js */; };
 		BF61DC2C2B97CCD1001C91E9 /* Test_ImportedDefaultIsWrongExport.js in Resources */ = {isa = PBXBuildFile; fileRef = BF61DC2B2B97CCD1001C91E9 /* Test_ImportedDefaultIsWrongExport.js */; };
@@ -24,6 +26,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BF2DA3972BAF3D4100757949 /* DebugGameView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebugGameView.swift; sourceTree = "<group>"; };
+		BF2DA3992BAF3DF900757949 /* MinesweeperGameView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MinesweeperGameView.swift; sourceTree = "<group>"; };
 		BF3EB1142B8B6B3400F1CA06 /* NotPoker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NotPoker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF61DC272B979D33001C91E9 /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		BF61DC292B97B4D9001C91E9 /* GameServer_Offline.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = GameServer_Offline.js; sourceTree = "<group>"; };
@@ -54,6 +58,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BF2DA3962BAF3D2700757949 /* GameViews */ = {
+			isa = PBXGroup;
+			children = (
+				BF2DA3992BAF3DF900757949 /* MinesweeperGameView.swift */,
+				BF2DA3972BAF3D4100757949 /* DebugGameView.swift */,
+			);
+			path = GameViews;
+			sourceTree = "<group>";
+		};
 		BF3EB10B2B8B6B3400F1CA06 = {
 			isa = PBXGroup;
 			children = (
@@ -87,6 +100,7 @@
 		BF70C2E52B8B6C0A002B72C0 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				BF2DA3962BAF3D2700757949 /* GameViews */,
 				BFFF5A872B8D1D0F0038148E /* Games */,
 				BF8A543B2B8BEC3400AFCA7E /* GameTest.js */,
 				BF61DC2B2B97CCD1001C91E9 /* Test_ImportedDefaultIsWrongExport.js */,
@@ -192,6 +206,8 @@
 			files = (
 				BFDD95F02B94A66200882472 /* JavascriptSourceView.swift in Sources */,
 				BF8A54362B8B7AD300AFCA7E /* GameContainerView.swift in Sources */,
+				BF2DA3982BAF3D4100757949 /* DebugGameView.swift in Sources */,
+				BF2DA39A2BAF3DF900757949 /* MinesweeperGameView.swift in Sources */,
 				BF70C2EE2B8B6C0A002B72C0 /* NotPokerApp.swift in Sources */,
 				BF61DC282B979D33001C91E9 /* LoginView.swift in Sources */,
 				BF70C2EF2B8B6C0A002B72C0 /* AppView.swift in Sources */,
