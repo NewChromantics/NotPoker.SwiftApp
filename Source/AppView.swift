@@ -2,7 +2,7 @@ import SwiftUI
 import NotPokerApi
 
 
-class ActionArgumentValue : Decodable, Equatable, Identifiable, Hashable, CustomStringConvertible
+class ActionArgumentValue : Encodable, Decodable, Equatable, Identifiable, Hashable, CustomStringConvertible
 {
 	var ValueAsString : String
 
@@ -131,6 +131,11 @@ public struct ActionList : Decodable
 }
 
 
+public struct ClientActionReply : Codable
+{
+	var Action: String
+	var Arguments : [ActionArgumentValue] = []
+}
 
 struct GameStateBase : Decodable
 {
@@ -151,19 +156,57 @@ struct GameStateBase : Decodable
 	}
 }
 
+
+public struct ThrowingPobs
+{
+	var Callback : () throws -> Void
+	
+	public func CallTheCallback() throws
+	{
+		try! Callback()
+	}
+	
+	init()
+	{
+		Callback = ThrowingPobs.DefaultCallback
+	}
+	
+	
+	static func DefaultCallback() throws
+	{
+		throw RuntimeError("default callback bad")
+	}
+}
+
+
 public struct ClientGameState
 {
 	var StateJson : String?
-	
+	var OnUserClickedActionCallback : (_ ActionReply:ClientActionReply) throws -> Void
+
+	public func OnUserClickedAction(_ ActionReply:ClientActionReply) throws
+	{
+		try! OnUserClickedActionCallback( ActionReply )
+	}
 
 	init()
 	{
 		StateJson = nil
+		OnUserClickedActionCallback = ClientGameState.DefaultOnUserClickedAction
 	}
 	
 	init(_ json:String)
 	{
 		StateJson = json
+		OnUserClickedActionCallback = ClientGameState.DefaultOnUserClickedAction
+	}
+	
+	static func DefaultOnUserClickedAction(ActionReply:ClientActionReply) throws
+	{
+		let ReplyJsonBytes = try! JSONEncoder().encode(ActionReply)
+		let ReplyJson = String(data: ReplyJsonBytes, encoding: .utf8)!
+		print("todo: reply action; \(ReplyJson) ")
+		//throw RuntimeError("todo: handle a throw from the action flow")
 	}
 	
 	

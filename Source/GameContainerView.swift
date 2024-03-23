@@ -2,6 +2,15 @@ import SwiftUI
 import NotPokerApi
 
 
+struct WaitingForGameView : View
+{
+	//@Binding var state : ClientGameState
+
+	var body: some View
+	{
+		Label("Waiting for game...", systemImage: "suit.heart.fill")
+	}
+}
 
 
 
@@ -11,11 +20,6 @@ struct GameContainerView : View
 	//@Binding var gameServer : GameServerWrapper
 	@StateObject var gameServer : GameServerWrapper
 
-	
-	func WaitingForGameView() -> some View
-	{
-		Label("Waiting for game...", systemImage: "suit.heart.fill")
-	}
 	
 	
 	var body: some View
@@ -31,7 +35,7 @@ struct GameContainerView : View
 				 MinesweeperGameView( state: $gameServer.Client_LastStateJson )
 				 */
 			default:
-				DebugGameView( state: $gameServer.Client_LastStateJson )
+				DebugGameView(state: $gameServer.Client_LastStateJson )
 			}
 		}
 	}

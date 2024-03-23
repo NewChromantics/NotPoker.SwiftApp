@@ -3,46 +3,38 @@ import NotPokerApi
 
 
 
-extension Array {
-	mutating func resize(to size: Int, with filler: Element) {
-		let sizeDifference = size - count
-		guard sizeDifference != 0 else {
-			return
-		}
-		if sizeDifference > 0 {
-			self.append(contentsOf: Array<Element>(repeating: filler, count: sizeDifference));
-		}
-		else {
-			self.removeLast(sizeDifference * -1) //*-1 because sizeDifference is negative
-		}
-	}
-
-	func resized(to size: Int, with filler: Element) -> Array {
-		var selfCopy = self;
-		selfCopy.resize(to: size, with: filler)
-		return selfCopy
-	}
-}
-
 
 struct DebugActionView : View
 {
-	//	gr: mega bodge...
+	@Binding var state : ClientGameState	//	passing this to get access to the callbacks
 	@State private var selectedValues : [ActionArgumentValue]
-	var key : String
+	var actionName : String
 	var actionMeta : ActionMeta
+	@State var ActionError : String? = nil
 	
 	
+	//	todo: handle throwing and display to UI
 	func OnRunAction()
 	{
-		let ValuesDebug = selectedValues.compactMap({String(describing: $0)}).joined(separator:",")
-		print("Player run action \(key) with \(ValuesDebug)")
+		do
+		{
+			//let ValuesDebug = selectedValues.compactMap({String(describing: $0)}).joined(separator:",")
+			//print("Player run action \(key) with \(ValuesDebug)")
+			var Reply = ClientActionReply(Action:actionName)
+			Reply.Arguments = selectedValues
+			try! state.OnUserClickedAction( Reply )
+		}
+		catch
+		{
+			ActionError = error.localizedDescription
+		}
 	}
 	
-	init(key: String, actionMeta: ActionMeta)
+	init(actionName: String, actionMeta: ActionMeta,state:Binding<ClientGameState>)
 	{
-		self.key = key
+		self.actionName = actionName
 		self.actionMeta = actionMeta
+		_state = state
 
 		//	gr: I dont get why i cant modify self.selectedValues here...
 		var defaultValues : [ActionArgumentValue] = []
@@ -58,30 +50,37 @@ struct DebugActionView : View
 	
 	var body: some View
 	{
-		HStack()
+		VStack
 		{
-			Button(action: OnRunAction)
+			HStack()
 			{
-				Label("Action \(key)", systemImage: "suit.heart")
-			}
-			
-			//Text(value.description)
-			//ForEach( Array(value.Arguments) )
-			ForEach(0..<actionMeta.Arguments.count, id: \.self)
-			{
-				ArgumentIndex in
-				let Values = actionMeta.Arguments[ArgumentIndex]
-				
-				Picker("Arg#\(ArgumentIndex)", selection: $selectedValues[ArgumentIndex])
+				Button(action: OnRunAction)
 				{
-					ForEach( Values )
+					Label("Action \(actionName)", systemImage: "bolt.fill")
+				}
+				
+				//Text(value.description)
+				//ForEach( Array(value.Arguments) )
+				ForEach(0..<actionMeta.Arguments.count, id: \.self)
+				{
+					ArgumentIndex in
+					let Values = actionMeta.Arguments[ArgumentIndex]
+					
+					Picker("Arg#\(ArgumentIndex)", selection: $selectedValues[ArgumentIndex])
 					{
-						value in
-						Text("\(value.description)").tag(value)
+						ForEach( Values )
+						{
+							value in
+							Text("\(value.description)").tag(value)
+						}
 					}
 				}
 			}
 			
+			if let error = ActionError
+			{
+				Label("Error: \(error)", systemImage: "exclamationmark.triangle.fill")
+			}
 		}
 	}
 }
@@ -91,7 +90,8 @@ struct DebugGameView : View
 {
 	@Binding var state : ClientGameState
 
-		
+
+
 	var body: some View
 	{
 		let GameName = state.gameType ?? "null"
@@ -103,7 +103,7 @@ struct DebugGameView : View
 			ForEach( Array(state.actions), id: \.key)
 			{
 				actionKey, actionMeta in
-				DebugActionView( key: actionKey, actionMeta: actionMeta )
+				DebugActionView( actionName: actionKey, actionMeta: actionMeta, state:$state )
 			}
 		}
 		
