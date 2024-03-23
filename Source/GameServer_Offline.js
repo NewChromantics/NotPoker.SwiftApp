@@ -142,8 +142,15 @@ async function Server_RunGameServer()
 		return LocalServer.Server_SendMoveAndWait.call(LocalServer, PlayerUid, Message );
 	}
 	
-	const OnAction = LocalServer.Server_OnAction.bind(LocalServer);
-	
+	function OnAction(Action)
+	{
+		//	add state to output
+		//	gr: maybe needs to be in more generic code...
+		const State = Game.GetPublicState();
+		const Message = Object.assign( {}, Action, State );
+		return LocalServer.Server_OnAction.call(LocalServer, Message );
+	}
+		
 	await Game.WaitForEnoughPlayers();
 	const GameResult = await Game.RunGame( SendMoveAndWait, OnStateChanged, OnAction );
 	
