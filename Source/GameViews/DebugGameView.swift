@@ -22,7 +22,7 @@ struct DebugActionView : View
 			//print("Player run action \(key) with \(ValuesDebug)")
 			var Reply = ClientActionReply(Action:actionName)
 			Reply.Arguments = selectedValues
-			try! state.OnUserClickedAction( Reply )
+			try state.OnUserClickedAction( Reply )
 		}
 		catch
 		{
@@ -80,6 +80,12 @@ struct DebugActionView : View
 			if let error = ActionError
 			{
 				Label("Error: \(error)", systemImage: "exclamationmark.triangle.fill")
+					.padding(3)
+					.frame(maxWidth: .infinity)
+					.background(Color("ErrorBackground"))
+					.foregroundColor(Color("ErrorForeground"))
+					.cornerRadius(3)
+					.padding(3)
 			}
 		}
 	}

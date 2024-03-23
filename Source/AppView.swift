@@ -186,7 +186,7 @@ public struct ClientGameState
 
 	public func OnUserClickedAction(_ ActionReply:ClientActionReply) throws
 	{
-		try! OnUserClickedActionCallback( ActionReply )
+		try OnUserClickedActionCallback( ActionReply )
 	}
 
 	init()
@@ -206,7 +206,7 @@ public struct ClientGameState
 		let ReplyJsonBytes = try! JSONEncoder().encode(ActionReply)
 		let ReplyJson = String(data: ReplyJsonBytes, encoding: .utf8)!
 		print("todo: reply action; \(ReplyJson) ")
-		//throw RuntimeError("todo: handle a throw from the action flow")
+		throw RuntimeError("todo: handle a throw from the action flow")
 	}
 	
 	
