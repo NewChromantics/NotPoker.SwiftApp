@@ -48,23 +48,39 @@ struct CellItem: Identifiable
 
 }
 
-func getSquareGrid(ContentSize: CGSize, MapWidth: Int, MapHeight:Int) -> [CellItem]
+func getSquareGrid(ContentRect:GeometryProxy, MapWidth: Int, MapHeight:Int) -> ([CellItem],CGRect)
 {
+	let ContentSize = ContentRect.size
+	var ContentX = ContentRect.frame(in: .local).minX
+	var ContentY = ContentRect.frame(in: .local).minY
 	var CellArray: [CellItem] = []
 	let rectWidth = round( ContentSize.width/CGFloat(MapWidth) )
 	let rectHeight = round( ContentSize.height/CGFloat(MapHeight) )
 	let rectangleSize = min( rectWidth, rectHeight )
 	
+	let GridRect = CGRect( x:ContentX, y:ContentY, width:CGFloat(MapWidth)*rectangleSize, height:CGFloat(MapHeight)*rectangleSize )
+
+	//	center
+	ContentX += (ContentSize.width - GridRect.width) / 2
+	ContentY += (ContentSize.height - GridRect.height) / 2
+
 	for row in 0...MapHeight - 1
 	{
 		for column in 0...MapWidth - 1 
 		{
-			let CellRect = CGRect( x:CGFloat(column) * rectangleSize, y: CGFloat(row) * rectangleSize, width: rectangleSize, height: rectangleSize )
+			var CellX = CGFloat(column) * rectangleSize
+			var CellY = CGFloat(row) * rectangleSize
+			CellX += ContentX
+			CellY += ContentY
+			let CellRect = CGRect( x:CellX, y:CellY, width: rectangleSize, height: rectangleSize )
+			
 			let Cell = CellItem( ContentRect: CellRect, MapX: column, MapY: row)
 			CellArray.append(Cell)
 		}
 	}
-	return CellArray
+	
+	
+	return (CellArray,GridRect)
 }
 
 struct MinesweeperGameView : View
@@ -89,7 +105,7 @@ struct MinesweeperGameView : View
 		}
 	}
 	
-	func GetCellColour(_ value:ActionArgumentValue) -> Color
+	func GetCellBackgroundColour(_ value:ActionArgumentValue) -> Color
 	{
 		switch value.description
 		{
@@ -107,7 +123,27 @@ struct MinesweeperGameView : View
 		default:	return Color("MinesweeperCell_Bomb")
 		}
 	}
-		
+	
+	func GetCellForegroundColour(_ value:ActionArgumentValue) -> Color
+	{
+		switch value.description
+		{
+		case "?",
+			"0",
+			"1",
+			"2",
+			"3",
+			"4",
+			"5",
+			"6",
+			"7",
+			"8":
+			return Color("MinesweeperCell_Foreground")
+			//	user's name = bomb
+		default:	return Color("MinesweeperCell_BombForeground")
+		}
+	}
+	
 	func MapView(_ state:MinesweeperGameState) -> some View
 	{
 		let MapWidth = state.MapWidth
@@ -117,30 +153,31 @@ struct MinesweeperGameView : View
 			GeometryReader
 			{
 				geometry in
-				let Cells: [CellItem] = getSquareGrid(ContentSize: geometry.size, MapWidth:MapWidth, MapHeight:MapHeight)
-				ForEach(Cells)
-				{
-					Cell in
-					let CellValue = state.MapValueAt(Cell.MapX,Cell.MapY)
-					ZStack()
+				let (Cells,GridRect) = getSquareGrid(ContentRect: geometry, MapWidth:MapWidth, MapHeight:MapHeight)
+					ForEach(Cells)
 					{
-						RoundedRectangle(cornerRadius: 3, style: .continuous)
-							.fill( GetCellColour(CellValue) )
-							.padding(2)
-						Text("\(CellValue.description)")
-							.foregroundColor( Color("GameBackground") )
-							.allowsHitTesting(false)
+						Cell in
+						let CellValue = state.MapValueAt(Cell.MapX,Cell.MapY)
+						ZStack()
+						{
+							RoundedRectangle(cornerRadius: 3, style: .continuous)
+								.fill( GetCellBackgroundColour(CellValue) )
+								.padding(2)
+							Text("\(CellValue.description)")
+								.foregroundColor( GetCellForegroundColour(CellValue) )
+								.allowsHitTesting(false)
+						}
+						.frame( width: Cell.ContentRect.width, height: Cell.ContentRect.height/*, alignment: .center*/)
+						.offset( x: Cell.ContentRect.minX, y: Cell.ContentRect.minY )
+						.onTapGesture
+						{
+							OnTappedCell(Cell.MapX,Cell.MapY)
+						}
 					}
-					.frame( width: Cell.ContentRect.width, height: Cell.ContentRect.height, alignment: .center)
-					.offset( x: Cell.ContentRect.minX, y: Cell.ContentRect.minY )
-					.onTapGesture
-					{
-						OnTappedCell(Cell.MapX,Cell.MapY)
-					}
-				}
+				
 			}
-			.frame(alignment: .center)
 		}
+		//.background(Color.blue)
 	}
 	
 	

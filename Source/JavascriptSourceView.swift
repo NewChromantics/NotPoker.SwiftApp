@@ -48,8 +48,10 @@ struct JavascriptSourceView : View
 	
 	var body: some View
 	{
-		TextField("Filename", text:$filename)
-			.onChange(of: filename)
+		if #available(iOS 17.0, *) 
+		{
+			TextField("Filename", text:$filename)
+				.onChange(of: filename)
 			{
 				LoadSource(filename)
 			}
@@ -57,7 +59,8 @@ struct JavascriptSourceView : View
 			{
 				LoadSource(filename)
 			}
-			
+		}
+		
 		if ( url != nil )
 		{
 			Label(url!.absoluteString,systemImage: "square.stack")
