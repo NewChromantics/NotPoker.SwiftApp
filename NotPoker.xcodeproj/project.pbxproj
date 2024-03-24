@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		BF2DA3982BAF3D4100757949 /* DebugGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2DA3972BAF3D4100757949 /* DebugGameView.swift */; };
 		BF2DA39A2BAF3DF900757949 /* MinesweeperGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2DA3992BAF3DF900757949 /* MinesweeperGameView.swift */; };
+		BF2DA3AB2BB0552200757949 /* Minesweeper.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF2DA3AA2BB0552200757949 /* Minesweeper.xcassets */; };
 		BF61DC282B979D33001C91E9 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF61DC272B979D33001C91E9 /* LoginView.swift */; };
 		BF61DC2A2B97B4D9001C91E9 /* GameServer_Offline.js in Resources */ = {isa = PBXBuildFile; fileRef = BF61DC292B97B4D9001C91E9 /* GameServer_Offline.js */; };
 		BF61DC2C2B97CCD1001C91E9 /* Test_ImportedDefaultIsWrongExport.js in Resources */ = {isa = PBXBuildFile; fileRef = BF61DC2B2B97CCD1001C91E9 /* Test_ImportedDefaultIsWrongExport.js */; };
@@ -28,6 +29,7 @@
 /* Begin PBXFileReference section */
 		BF2DA3972BAF3D4100757949 /* DebugGameView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebugGameView.swift; sourceTree = "<group>"; };
 		BF2DA3992BAF3DF900757949 /* MinesweeperGameView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MinesweeperGameView.swift; sourceTree = "<group>"; };
+		BF2DA3AA2BB0552200757949 /* Minesweeper.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Minesweeper.xcassets; sourceTree = "<group>"; };
 		BF3EB1142B8B6B3400F1CA06 /* NotPoker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NotPoker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF61DC272B979D33001C91E9 /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		BF61DC292B97B4D9001C91E9 /* GameServer_Offline.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = GameServer_Offline.js; sourceTree = "<group>"; };
@@ -63,6 +65,7 @@
 			children = (
 				BF2DA3992BAF3DF900757949 /* MinesweeperGameView.swift */,
 				BF2DA3972BAF3D4100757949 /* DebugGameView.swift */,
+				BF2DA3AA2BB0552200757949 /* Minesweeper.xcassets */,
 			);
 			path = GameViews;
 			sourceTree = "<group>";
@@ -186,6 +189,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BF2DA3AB2BB0552200757949 /* Minesweeper.xcassets in Resources */,
 				BFFF5A882B8D1D0F0038148E /* Games in Resources */,
 				BF8A543C2B8BEC3400AFCA7E /* GameTest.js in Resources */,
 				BF61DC2C2B97CCD1001C91E9 /* Test_ImportedDefaultIsWrongExport.js in Resources */,
@@ -348,7 +352,7 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.1;
@@ -381,7 +385,7 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.1;

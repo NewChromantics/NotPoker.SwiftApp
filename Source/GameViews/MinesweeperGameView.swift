@@ -25,10 +25,10 @@ public struct MinesweeperGameState : GameStateType
 	{
 		return Map.count
 	}
-	public func MapValueAt(_ x:Int,_ y:Int) -> String
+	public func MapValueAt(_ x:Int,_ y:Int) -> ActionArgumentValue
 	{
 		let Value = Map[x][y]
-		return Value.description
+		return Value
 	}
 
 	public init(Error: String)
@@ -89,6 +89,25 @@ struct MinesweeperGameView : View
 		}
 	}
 	
+	func GetCellColour(_ value:ActionArgumentValue) -> Color
+	{
+		switch value.description
+		{
+		case "?":	return Color("MinesweeperCell_?")
+		case "0":	return Color("MinesweeperCell_0")
+		case "1":	return Color("MinesweeperCell_1")
+		case "2":	return Color("MinesweeperCell_2")
+		case "3":	return Color("MinesweeperCell_3")
+		case "4":	return Color("MinesweeperCell_4")
+		case "5":	return Color("MinesweeperCell_5")
+		case "6":	return Color("MinesweeperCell_6")
+		case "7":	return Color("MinesweeperCell_7")
+		case "8":	return Color("MinesweeperCell_8")
+			//	user's name = bomb
+		default:	return Color("MinesweeperCell_Bomb")
+		}
+	}
+		
 	func MapView(_ state:MinesweeperGameState) -> some View
 	{
 		let MapWidth = state.MapWidth
@@ -106,9 +125,9 @@ struct MinesweeperGameView : View
 					ZStack()
 					{
 						RoundedRectangle(cornerRadius: 3, style: .continuous)
-							.fill( Color("GameForeground") )
+							.fill( GetCellColour(CellValue) )
 							.padding(2)
-						Text("\(CellValue)")
+						Text("\(CellValue.description)")
 							.foregroundColor( Color("GameBackground") )
 							.allowsHitTesting(false)
 					}
