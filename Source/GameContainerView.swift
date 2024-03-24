@@ -30,10 +30,10 @@ struct GameContainerView : View
 			{
 			case nil:
 				WaitingForGameView()
-				/*
-				 case "Minesweeper":
-				 MinesweeperGameView( state: $gameServer.Client_LastStateJson )
-				 */
+
+			case "Minesweeper":
+				MinesweeperGameView( baseState: $gameServer.Client_LastStateJson )
+
 			default:
 				DebugGameView(state: $gameServer.Client_LastStateJson )
 			}

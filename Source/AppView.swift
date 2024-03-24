@@ -41,22 +41,28 @@ public struct ClientGameState
 		return State.GameType
 	}
 	
-	func GetClientState() -> GameStateBase
+	func GetState<StateType:GameStateType>() -> StateType
 	{
 		if ( StateJson == nil )
 		{
-			return GameStateBase()
+			return StateType()
 		}
 		do
 		{
 			let Client_LastStateJsonData = StateJson!.data(using: .utf8)!
-			let State = try JSONDecoder().decode( GameStateBase.self, from: Client_LastStateJsonData )
+			let State = try JSONDecoder().decode( StateType.self, from: Client_LastStateJsonData )
 			return State
 		}
 		catch
 		{
-			return GameStateBase(Error:error.localizedDescription)
+			return StateType(Error:error.localizedDescription)
 		}
+	}
+	
+	func GetClientState() -> GameStateBase
+	{
+		let state : GameStateBase = try GetState()	//	need var with type to infer generic param
+		return state
 	}
 
 	public var actions : [String: ActionMeta]
